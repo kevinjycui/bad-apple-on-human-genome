@@ -1,4 +1,5 @@
 **/__pycache__
 **/venv
 **.mp4
-**/outputs
+**.fa
+*.fna
