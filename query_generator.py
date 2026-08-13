@@ -6,8 +6,10 @@ START_FRAME = 0
 FRAMES = 5257
 FPS = 1
 
-HEIGHT = 200
-WIDTH = 200
+HEIGHT = 27
+WIDTH = 36
+
+random.seed(0)
 
 def png_to_np_array(filename):
     # print(WIDTH, HEIGHT)
@@ -40,7 +42,7 @@ for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
 for i in range(HEIGHT):
     for j in range(WIDTH):
         print(f"Writing pixel sequence ({i}, {j})                         ", end='\r', flush=True)
-        with open(f'queries/query_{i}_{j}.fa', "w+") as file:
+        with open(f'queries/query_{i:02d}_{j:02d}.fa', "w+") as file:
             file.write(f">BA_{i}_{j}\n{outputs[i][j]}")
 
 print("Done!                                                  ")
