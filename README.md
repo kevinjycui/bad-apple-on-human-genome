@@ -1,0 +1,1 @@
+Genome used: GCA_000001405.15_GRCh38_genomic
