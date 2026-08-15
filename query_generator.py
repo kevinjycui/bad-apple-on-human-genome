@@ -10,7 +10,7 @@ def png_to_np_array(filename, HEIGHT, WIDTH):
     # print(WIDTH, HEIGHT)
     img = Image.open(filename).resize((WIDTH, HEIGHT))
     # print(img.size)
-    data = np.array(img.get_flattened_data()).reshape(img.size[1], img.size[0], 3)
+    data = np.array(img.getdata()).reshape(img.size[1], img.size[0], 3)
     bindata = np.zeros((img.size[1], img.size[0]), np.uint32)
     for i, row in enumerate(data):
         for j, byte in enumerate(row):

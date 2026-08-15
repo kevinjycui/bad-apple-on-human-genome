@@ -49,8 +49,13 @@ def parse(file):
         }
 
         sequence = lines[7][lines[5].count(' ') + 6:]
-        sequence += lines[13][7:] + lines[19][7:] + lines[25][7:]
-        sequence += lines[31][7:-lines[29].count(' ')+1]
+        query_i = 11
+        sequence_i = 13
+        while lines[query_i].count(' ') == 1:
+            sequence += lines[sequence_i][7:]
+            query_i += 6
+            sequence_i += 6
+        sequence += lines[sequence_i][7:-lines[query_i].count(' ')+1]
 
         result["sequence"] = sequence
 
