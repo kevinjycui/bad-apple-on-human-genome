@@ -8,7 +8,7 @@ trap "exit_code=\$?; kill \$(jobs -p)" EXIT
 for query in queries/*.fa; do
     output=$(echo $query | sed "s/queries/outputs/g; s/query/fasta/g; s/\.fa/\.output/g")
     if [ -s $output ]; then
-        if [ $(cat $output | wc -l) -gt 15 ]; then
+        if [ $(cat $output | wc -l) -gt 25 ]; then
             echo Output for $query already found, skipping
             continue
         fi

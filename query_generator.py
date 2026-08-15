@@ -4,7 +4,7 @@ import random
 
 START_FRAME = 0
 
-random.seed(0)
+random.seed(100)
 
 def png_to_np_array(filename, HEIGHT, WIDTH):
     # print(WIDTH, HEIGHT)
