@@ -15,8 +15,5 @@ for query in queries/*.fa; do
         rm $output
     fi
     echo Aligning to $query
-    (glsearch36 -s custom.matrix $query chr1.fna > $output && echo Done aligning to $query in $output) &
-    while [ $(jobs -rp | wc -l) -ge 3 ]; do
-        sleep 1
-    done
+    glsearch36 -s custom.matrix $query chr1.fna > $output
 done
