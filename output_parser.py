@@ -4,13 +4,22 @@ import json
 def parse(file):
     with open(file, 'r') as f:
         text = f.read() 
+
+        if len(text.split('\n')) < 25:
+            return {
+                "status": "No sequence found"
+            }
+        
         section = text.split('>>')[2]
         lines = section.split('\n')
+
         result = {
-            'name': lines[0]
+            "status": "Sequence found",
+            "name": lines[0]
         }
 
         scores_line = [s for s in lines[1].split(' ') if s != ""]
+
         if scores_line[0] == "rev-comp":
             result["rev-comp"] = True
             i = 1
@@ -47,9 +56,21 @@ def parse(file):
 
         return result
 
+def parse_to_json_files():
+    sequences_found = 0
+    sequences_not_found = 0
 
-for txt in glob.glob("outputs/*.output"):
-    print("Parsing", txt)
-    data = parse(txt)
-    with open(txt.replace(".output", ".json"), "w+") as f:
-        json.dump(data, f, indent=2)
+    for txt in glob.glob("outputs/*.output"):
+        print("Parsing", txt)
+        data = parse(txt)
+
+        if data["status"] == "Sequence found":
+            sequences_found += 1
+        else:
+            sequences_not_found += 1
+
+        with open(txt.replace(".output", ".json"), "w+") as f:
+            json.dump(data, f, indent=2)
+
+    print("Sequences found:", sequences_found)
+    print("Sequences not found:", sequences_not_found)

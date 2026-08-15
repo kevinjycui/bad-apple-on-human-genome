@@ -3,15 +3,10 @@ import numpy as np
 import random
 
 START_FRAME = 0
-FRAMES = 5257
-FPS = 1
-
-HEIGHT = 27
-WIDTH = 36
 
 random.seed(0)
 
-def png_to_np_array(filename):
+def png_to_np_array(filename, HEIGHT, WIDTH):
     # print(WIDTH, HEIGHT)
     img = Image.open(filename).resize((WIDTH, HEIGHT))
     # print(img.size)
@@ -22,27 +17,27 @@ def png_to_np_array(filename):
             bindata[i, j] = 1 if sum(byte) > 127*3 else 0
     return bindata
 
-outputs = []
-for i in range(HEIGHT):
-    row = []
-    for j in range(WIDTH):
-        row.append("")
-    outputs.append(row)
+def generate_queries(HEIGHT, WIDTH, FRAMES, FPS):
+    outputs = []
+    for i in range(HEIGHT):
+        row = []
+        for j in range(WIDTH):
+            row.append("")
+        outputs.append(row)
 
-for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
-    bindata = png_to_np_array(f"frames/frame{f}.png")
+    for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
+        bindata = png_to_np_array(f"frames/frame{f}.png", HEIGHT, WIDTH)
+        print(f"Processing frame {f}                         ", end='\r', flush=True)
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                if bindata[i, j] == 1:
+                    outputs[i][j] += random.choice(('C','T'))
+                else:
+                    outputs[i][j] += random.choice(('A','G'))
+
     for i in range(HEIGHT):
         for j in range(WIDTH):
-            print(f"Processing frame {f} at pixel ({i}, {j})                         ", end='\r', flush=True)
-            if bindata[i, j] == 1:
-                outputs[i][j] += random.choice(('C','T'))
-            else:
-                outputs[i][j] += random.choice(('A','G'))
+            with open(f'queries/query_{i:02d}_{j:02d}.fa', "w+") as file:
+                file.write(f">BA_{i}_{j}\n{outputs[i][j]}")
 
-for i in range(HEIGHT):
-    for j in range(WIDTH):
-        print(f"Writing pixel sequence ({i}, {j})                         ", end='\r', flush=True)
-        with open(f'queries/query_{i:02d}_{j:02d}.fa', "w+") as file:
-            file.write(f">BA_{i}_{j}\n{outputs[i][j]}")
-
-print("Done!                                                  ")
+    print("Done!                                                  ")
