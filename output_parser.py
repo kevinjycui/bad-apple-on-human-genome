@@ -9,4 +9,4 @@ def parse(file):
         print(lines[1])
 
 
-parse("outputs/queries/query_0_0.fa.output")
+parse("outputs/fasta_0_0.output")

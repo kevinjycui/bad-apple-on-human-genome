@@ -9,7 +9,7 @@ FPS = 1
 HEIGHT = 27
 WIDTH = 36
 
-random.seed(0)
+random.seed(100)
 
 def png_to_np_array(filename):
     # print(WIDTH, HEIGHT)
