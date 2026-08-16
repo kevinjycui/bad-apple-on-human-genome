@@ -5,7 +5,7 @@ def parse(file):
     with open(file, 'r') as f:
         text = f.read() 
 
-        if len(text.split('\n')) < 25:
+        if len(text.split('>>')) <= 2:
             return {
                 "status": "No sequence found"
             }
@@ -48,14 +48,16 @@ def parse(file):
             "to": indices[1]
         }
 
-        sequence = lines[7][lines[5].count(' ') + 6:]
         query_i = 11
         sequence_i = 13
-        while lines[query_i].count(' ') == 1:
+        space_offset = 6-len(lines[query_i].split(' ')[0])
+        sequence = lines[7][lines[5].count(' ') + 6 - space_offset:]
+
+        while lines[query_i].count(' ') == 1 + space_offset:
             sequence += lines[sequence_i][7:]
             query_i += 6
             sequence_i += 6
-        sequence += lines[sequence_i][7:-lines[query_i].count(' ')+1]
+        sequence += lines[sequence_i][7:-lines[query_i].count(' ') + 1 + space_offset]
 
         result["sequence"] = sequence
 

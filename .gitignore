@@ -1,9 +1,10 @@
+**/.ipynb_checkpoints
 **/__pycache__
 **/venv
 **.mp4
 **.fa
 **.output
 **.json
-*.fna
-*.zip
-*.mp4
+**.fna
+**.zip
+**.mp4

@@ -17,7 +17,7 @@ def png_to_np_array(filename, HEIGHT, WIDTH):
             bindata[i, j] = 1 if sum(byte) > 127*3 else 0
     return bindata
 
-def generate_queries(HEIGHT, WIDTH, FRAMES, FPS):
+def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
     outputs = []
     for i in range(HEIGHT):
         row = []
@@ -40,4 +40,19 @@ def generate_queries(HEIGHT, WIDTH, FRAMES, FPS):
             with open(f'queries/query_{i:02d}_{j:02d}.fa', "w+") as file:
                 file.write(f">BA_{i}_{j}\n{outputs[i][j]}")
 
+    print("Done!                                                  ")
+
+def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS):
+    for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
+        bindata = png_to_np_array(f"frames/frame{f}.png", HEIGHT, WIDTH)
+        print(f"Processing frame {f}                         ", end='\r', flush=True)
+        s = ""
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                if bindata[i, j] == 1:
+                    s += random.choice(('C','T'))
+                else:
+                    s += random.choice(('A','G'))
+        with open(f'queries/query_{f:04d}.fa', "w+") as file:
+            file.write(f">BA_{f}\n{s}")
     print("Done!                                                  ")
