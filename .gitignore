@@ -1,10 +1,13 @@
 **/.ipynb_checkpoints
 **/__pycache__
 **/venv
-**.mp4
+
 **.fa
 **.output
+outputs**/
+!outputs**/.gitkeep
 **.json
+
 **.fna
 **.zip
 **.mp4
