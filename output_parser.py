@@ -38,11 +38,11 @@ def parse(file):
                 attr += " "
                 i += 1
 
-        similarities = [float(s[:-1].replace('(', '')) for s in lines[2].split(' ') if s[-1] == '%']
+        similarities = [float(s[:-1].replace('(', '')) for s in lines[2].split(' ') if s != "" and s[-1] == '%']
         result["identity%"] = similarities[0]
         result["similar%"] = similarities[1]
 
-        indices = [int(x) for x in lines[2].split(' ')[-1][7:-1].split('-')]
+        indices = [x for x in lines[2].split(' ')[-1][7:-1].split('-')]
         result["range"] = {
             "from": indices[0],
             "to": indices[1]
