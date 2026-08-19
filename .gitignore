@@ -7,10 +7,10 @@
 **.output
 **.json
 
-outputs/
-queries/
-outputs*/
-queries*/
+outputs
+queries
+outputs*
+queries*
 
 **.fna
 **.zip
