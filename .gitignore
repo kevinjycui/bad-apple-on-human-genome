@@ -7,6 +7,11 @@
 **.output
 **.json
 
+outputs/
+queries/
+outputs*/
+queries*/
+
 **.fna
 **.zip
 **.mp4

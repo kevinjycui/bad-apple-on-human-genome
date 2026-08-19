@@ -16,6 +16,6 @@ for query in queries/*.fa; do
         rm $output
     fi
     echo Aligning to $query
-    glsearch36 -s custom.matrix -E 1.0 -b 1 -d 1 $query chr1.fna > $output
+    glsearch36 -s custom.matrix -b 1 -d 1 $query chr1.fna > $output
     echo Finished alignment in $SECONDS seconds to $output
 done
