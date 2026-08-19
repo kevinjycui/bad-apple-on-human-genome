@@ -7,9 +7,7 @@ START_FRAME = 0
 random.seed(100)
 
 def png_to_np_array(filename, HEIGHT, WIDTH):
-    # print(WIDTH, HEIGHT)
     img = Image.open(filename).resize((WIDTH, HEIGHT))
-    # print(img.size)
     data = np.array(img.getdata()).reshape(img.size[1], img.size[0], 3)
     bindata = np.zeros((img.size[1], img.size[0]), np.uint32)
     for i, row in enumerate(data):
@@ -26,7 +24,7 @@ def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
         outputs.append(row)
 
     for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
-        bindata = png_to_np_array(f"frames/frame{f}.png", HEIGHT, WIDTH)
+        bindata = png_to_np_array(f"frames/frame{f:04d}.png", HEIGHT, WIDTH)
         print(f"Processing frame {f}                         ", end='\r', flush=True)
         for i in range(HEIGHT):
             for j in range(WIDTH):
@@ -44,7 +42,7 @@ def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
 
 def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS):
     for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
-        bindata = png_to_np_array(f"frames/frame{f}.png", HEIGHT, WIDTH)
+        bindata = png_to_np_array(f"frames/frame{f:04d}.png", HEIGHT, WIDTH)
         print(f"Processing frame {f}                         ", end='\r', flush=True)
         s = ""
         for i in range(HEIGHT):
