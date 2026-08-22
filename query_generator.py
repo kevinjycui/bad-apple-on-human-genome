@@ -90,9 +90,9 @@ def generate_queries_by_line(HEIGHT, WIDTH, FRAMES, FPS):
                 query = ""
                 for l in line:
                     if int(l) == 1:
-                        query += random.choice(('G', 'T'))
+                        query += random.choice(('C', 'T'))
                     else:
-                        query += random.choice(('A', 'C'))
+                        query += random.choice(('A', 'G'))
                 with open(f'queries/query_{identity:04d}.fa', 'w+') as query_file:
                     query_file.write(f">BA_{identity}\n{query}")
                 identity += 1
