@@ -2,6 +2,7 @@ from PIL import Image
 import numpy as np
 import random
 import json
+import os
 
 START_FRAME = 0
 
@@ -16,7 +17,7 @@ def png_to_np_array(filename, HEIGHT, WIDTH):
             bindata[i, j] = 1 if sum(byte) > 127*3 else 0
     return bindata
 
-def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
+def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS, GROUP1, GROUP2):
     outputs = []
     for i in range(HEIGHT):
         row = []
@@ -30,9 +31,9 @@ def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
         for i in range(HEIGHT):
             for j in range(WIDTH):
                 if bindata[i, j] == 1:
-                    outputs[i][j] += random.choice(('C','T'))
+                    outputs[i][j] += random.choice(GROUP1)
                 else:
-                    outputs[i][j] += random.choice(('A','G'))
+                    outputs[i][j] += random.choice(GROUP2)
 
     for i in range(HEIGHT):
         for j in range(WIDTH):
@@ -49,7 +50,7 @@ def generate_queries_by_coordinate(HEIGHT, WIDTH, FRAMES, FPS):
 
     print("Done!                                                  ")
 
-def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS):
+def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS, GROUP1, GROUP2):
     for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
         bindata = png_to_np_array(f"frames/frame{f:04d}.png", HEIGHT, WIDTH)
         print(f"Processing frame {f}                         ", end='\r', flush=True)
@@ -57,9 +58,9 @@ def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS):
         for i in range(HEIGHT):
             for j in range(WIDTH):
                 if bindata[i, j] == 1:
-                    s += random.choice(('C','T'))
+                    s += random.choice(GROUP1)
                 else:
-                    s += random.choice(('A','G'))
+                    s += random.choice(GROUP2)
         with open(f'queries/query_{f:04d}.fa', "w+") as file:
             file.write(f">BA_{f}\n{s}")
 
@@ -73,7 +74,7 @@ def generate_queries_by_frame(HEIGHT, WIDTH, FRAMES, FPS):
 
     print("Done!                                                  ")
 
-def generate_queries_by_line(HEIGHT, WIDTH, FRAMES, FPS):
+def generate_queries_by_line(HEIGHT, WIDTH, FRAMES, FPS, GROUP1, GROUP2):
     line_cache = {}
     identity = 0
     for f in range(START_FRAME+1, START_FRAME+FRAMES+1, 24//FPS):
@@ -90,9 +91,9 @@ def generate_queries_by_line(HEIGHT, WIDTH, FRAMES, FPS):
                 query = ""
                 for l in line:
                     if int(l) == 1:
-                        query += random.choice(('C', 'T'))
+                        query += random.choice(GROUP1)
                     else:
-                        query += random.choice(('A', 'G'))
+                        query += random.choice(GROUP2)
                 with open(f'queries/query_{identity:04d}.fa', 'w+') as query_file:
                     query_file.write(f">BA_{identity}\n{query}")
                 identity += 1

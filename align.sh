@@ -23,7 +23,7 @@ for query in queries/*.fa; do
 
     echo ===
     echo Aligning to $query
-    glsearch36 -s custom.matrix -b 1 -d 1 $query chr1.fna > $output
+    glsearch36 -s custom.matrix -b 1 -d 1 -E 5 $query chr1.fna > $output
 
     elapsed_time=$SECONDS
     ((total_time += elapsed_time))
