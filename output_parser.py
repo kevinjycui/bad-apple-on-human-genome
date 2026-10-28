@@ -44,8 +44,8 @@ def parse(file):
 
         indices = [x for x in lines[2].split(' ')[-1][7:-1].split('-')]
         result["range"] = {
-            "from": indices[0],
-            "to": indices[1]
+            "from": int(indices[0]),
+            "to": int(indices[1])
         }
 
         query_i = 11
